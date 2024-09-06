@@ -1,0 +1,27 @@
+label {
+    margin-right: 2rem;
+}
+
+.lberror {
+    color: red;
+}
+
+input[type=text],
+input[type=number],
+input[type=textarea] {
+    width: 25%;
+    margin-bottom: 1rem;
+}
+
+input[type=checkbox] {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.cberror {
+    outline: 1px solid red;
+}
