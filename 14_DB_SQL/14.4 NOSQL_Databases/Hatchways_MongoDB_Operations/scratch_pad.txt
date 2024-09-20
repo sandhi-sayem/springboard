@@ -1,0 +1,52 @@
+db.movies.aggregate([ {$group: {year: {$dateToString: {$format: "%Y", date:released} } } }, {}  ])
+
+db.movies.find({title: "The Matrix"}, {year: {$dateToString:{format: "%Y", date: "$released"}}})
+
+db.movies.aggregate([ { $group: { year: { $dateToString: { format: "%Y", date: "$released" } } }, count: { $count: {} } }, { $sort: { year: 1 } }  ])
+
+db.movies.aggregate([{$group : {_id : { $dateToString: { format: "%Y", date: "$released" } },count: { $sum: 1 }}}])
+
+db.movies.aggregate([{$group : {_id : { $dateToString: { format: "%Y", date: "$released" } },count: { $sum: 1 }}},{$sort: {_id: 1}}])
+
+
+
+
+
+db.movies.aggregate([{$group : {_id : { year: {$dateToString: { format: "%Y", date: "$released" } }},count: { $sum: 1 }}},{$sort: {"_id.year": 1}}])
+db.movies.aggregate([{$group : {_id : { year: {$dateToString: { format: "%Y", date: "$released" } }},count: { $sum: 1 }}},{$sort: {"_id.year": -1}}])
+
+
+db.movies.aggregate([{$group : {_id : { director: "$directors"},count: { $sum: 1 }}},{$sort: {"_id.director": 1}}])
+
+
+db.rand_test.aggregate([{$group : {_id : { director: "$directors"}, averageRating: {$avg: "$imdb.rating"} ,count: { $sum: 1 }}},{$sort: {"count": 1}}])
+
+
+
+db.articles.aggregate([
+  {$project: { _id: 0, class_artist: 1 } },
+  {$unwind: "$class_artist" },
+  {$group: { _id: "$class_artist", tags: { $sum: 1 } }},
+  {$project: { _id: 0,class_artist: "$_id", tags: 1 } },
+  {$sort: { tags: -1 } }
+])
+
+db.rand_test.aggregate([
+  {$unwind: "$directors" },
+  {$group: { _id: "$directors", tags: { $sum: 1 } }}
+])
+
+
+db.rand_test.aggregate([
+  {$unwind: "$directors" },
+  {$group: { _id: {director: "$directors"}, averageIMDBRating: { $avg: "$imdb.rating"} }},
+  {$sort: {"$averageIMDBRating": -1}}
+])
+
+db.rand_test.aggregate([
+  {$unwind: "$directors" },
+  {$group: { _id: {director: "$directors"}, averageIMDBRating: { $avg: "$imdb.rating"} }},
+  {$sort: {"averageIMDBRating": -1}}
+])
+
+db.movies.aggregate([{$unwind: "$directors" },{$group: { _id: {director: "$directors"}, averageIMDBRating: { $avg: "$imdb.rating"} }},{$sort: {"averageIMDBRating": -1}}])
