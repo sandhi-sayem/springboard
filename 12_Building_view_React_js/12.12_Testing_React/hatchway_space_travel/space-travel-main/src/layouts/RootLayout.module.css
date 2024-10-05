@@ -1,0 +1,11 @@
+.root-header,
+.root-main,
+.root-footer {
+    width: 100%;
+    max-width: 75rem;
+}
+
+.root-header,
+.root-footer {
+    margin: 1rem;
+}

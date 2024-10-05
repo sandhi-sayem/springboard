@@ -1,3 +1,29 @@
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
 body {
     width: 100vw;
+    height: 100vh;
+    color: white;
+    background-color: black;
+}
+
+button {
+    padding: 0.5rem;
+    color: lightblue;
+    border: 2px solid lightblue;
+    background-color: transparent;
+}
+
+button:hover {
+    border-color: pink;
+    color: pink;
 }

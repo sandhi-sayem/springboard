@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useLoading from "../../hooks/useLoading";
 import SpaceTravelApi from "../../services/SpaceTravelApi";
+import styles from "./Spacecrafts.module.css";
 
 const Spacecrafts = () => {
   const [spacecrafts, setSpacecrafts] = useState([]);
@@ -27,6 +28,7 @@ const Spacecrafts = () => {
         showLoading();
         await getSpacecrafts();
       } catch (error) {
+        console.log(`useEffect for spacecrafts failed.`);
       } finally {
         hideLoading();
       }
@@ -54,37 +56,34 @@ const Spacecrafts = () => {
 
   return (
     <div>
-      <button
-        onClick={() => navigate("/spacecraft/build")}
-        disabled={isLoading}
-      >
-        🏗️ Build a Spacecraft
-      </button>
+      {!isLoading && (
+        <button onClick={() => navigate("/spacecraft/build")}>
+          🏗️ Build a Spacecraft
+        </button>
+      )}
       <div>
         {spacecrafts.map((spacecraft) => (
-          <div key={spacecraft.id}>
-            <div onClick={() => navigate(`/spacecraft/${spacecraft.id}`)}>
+          <div key={spacecraft.id} className={styles.spacecraft}>
+            <div
+              onClick={() => navigate(`/spacecraft/${spacecraft.id}`)}
+              className={styles["spacecraft-image-container"]}
+            >
               {spacecraft.pictureUrl ? (
                 <img
                   src={spacecraft.pictureUrl}
                   alt={`image of spacecraft ${spacecraft.name}`}
+                  className={styles["spacecraft-image"]}
                 />
               ) : (
-                <span>🚀</span>
+                <span className={styles["spacecraft-image-default"]}>🚀</span>
               )}
             </div>
-            <div>
-              <div>
-                <span>id: {spacecraft.id}</span>
-              </div>
-              <div>
+            <div className={styles["spacecraft-information-container"]}>
+              <div className={styles["spacecraft-information"]}>
                 <span>name: {spacecraft.name}</span>
               </div>
-              <div>
+              <div className={styles["spacecraft-information"]}>
                 <span>capacity: {spacecraft.capacity}</span>
-              </div>
-              <div>
-                <span>currentLocaction: {spacecraft.currentLocation}</span>
               </div>
             </div>
             <div>

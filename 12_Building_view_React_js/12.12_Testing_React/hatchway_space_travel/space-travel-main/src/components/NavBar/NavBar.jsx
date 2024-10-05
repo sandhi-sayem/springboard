@@ -15,7 +15,9 @@ const NavBar = () => {
           key={navLink.text}
           to={navLink.to}
           className={({ isActive }) =>
-            `${styles["nav-link"]} ${isActive ? styles["nav-link-active"] : ""}`
+            `${styles["nav-links"]} ${
+              isActive ? styles["nav-link-active"] : ""
+            }`
           }
         >
           {navLink.text}

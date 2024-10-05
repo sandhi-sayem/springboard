@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useLoading from "../../hooks/useLoading";
 import SpaceTravelApi from "../../services/SpaceTravelApi";
+import styles from "./BuildSpacecraft.module.css";
 
 const BuildSpacecraft = () => {
   const INITIAL_DATA = {
@@ -17,11 +18,11 @@ const BuildSpacecraft = () => {
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type } = event.target;
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [name]: type === "number" ? Number(value) : value,
     }));
   };
 
@@ -36,10 +37,10 @@ const BuildSpacecraft = () => {
       setFormErrors((prevErrors) => [...prevErrors, "Name is required!"]);
     }
 
-    if (!capacity.trim()) {
+    if (!capacity) {
       errorFlag = true;
       setFormErrors((prevErrors) => [...prevErrors, "Capacity is required!"]);
-    } else if (isNaN(capacity.trim())) {
+    } else if (isNaN(capacity)) {
       errorFlag = true;
       setFormErrors((prevErrors) => [
         ...prevErrors,
@@ -84,8 +85,8 @@ const BuildSpacecraft = () => {
       <div>
         <form onSubmit={handleSubmit}>
           <div>
-            <div>
-              <div>
+            <div className={styles["form-input-container"]}>
+              <div className={styles["form-input"]}>
                 <input
                   type="text"
                   id="name"
@@ -95,7 +96,7 @@ const BuildSpacecraft = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div>
+              <div className={styles["form-input"]}>
                 <input
                   type="number"
                   id="capacity"
@@ -105,7 +106,7 @@ const BuildSpacecraft = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div>
+              <div className={styles["form-input"]}>
                 <textarea
                   type="textarea"
                   id="description"
@@ -115,7 +116,7 @@ const BuildSpacecraft = () => {
                   onChange={handleInputChange}
                 ></textarea>
               </div>
-              <div>
+              <div className={styles["form-input"]}>
                 <input
                   type="text"
                   id="pictureUrl"
@@ -126,10 +127,12 @@ const BuildSpacecraft = () => {
                 />
               </div>
             </div>
-            <div>
-              <div>
+            <div className={styles["form-post-validation-container"]}>
+              <div className={styles["form-error-container"]}>
                 {formErrors.map((error, index) => (
-                  <div key={index}>{error}</div>
+                  <div key={index} className={styles["form-error-text"]}>
+                    {error}
+                  </div>
                 ))}
               </div>
               <div>

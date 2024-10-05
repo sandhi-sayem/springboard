@@ -1,0 +1,74 @@
+.planets {
+    display: flex;
+    border: 2px solid white;
+}
+
+.planets:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.planet {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    padding: 2rem;
+    border: 2px dotted white;
+}
+
+.planet-clicked {
+    border-color: red;
+}
+
+.planet:not(.planet-clicked):hover {
+    border-color: lightgreen;
+}
+
+.planet-image-container {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 2rem;
+}
+
+.planet-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.spacecrafts {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.spacecraft {
+    padding: 2rem 2rem 2rem 0;
+}
+
+.spacecraft-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 5rem;
+    cursor: grab;
+    border: 2px dotted white;
+    margin-bottom: 1rem;
+}
+
+.spacecraft-clicked .spacecraft-image-container {
+    border-color: red;
+}
+
+.spacecraft:not(.spacecraft-clicked) .spacecraft-image-container:hover {
+    border-color: lightgreen;
+}
+
+.spacecraft-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.spacecraft-image-default {
+    font-size: 3rem;
+}

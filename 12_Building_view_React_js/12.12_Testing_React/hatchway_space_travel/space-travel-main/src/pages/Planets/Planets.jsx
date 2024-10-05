@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import SpaceTravelApi from "../../services/SpaceTravelApi";
+import styles from "./Planets.module.css";
 
 const Planets = () => {
   const [planetInfo, setPlanetInfo] = useState([]);
@@ -54,7 +55,7 @@ const Planets = () => {
   }, []);
 
   const handleSpacecraftClick = async (spacecraftId, planetId) => {
-    if (clickedPlanetId !== planetId) {
+    if (Number.isInteger(clickedPlanetId) && clickedPlanetId !== planetId) {
       setClickedSpacecraftId(spacecraftId);
 
       try {
@@ -84,38 +85,50 @@ const Planets = () => {
 
   return (
     <>
-      {console.log(planetInfo)}
       {planetInfo.map((planet, index) => (
-        <div key={index}>
-          <div onClick={() => setClickedPlanetId(planet.id)}>
-            <div>
+        <div key={index} className={styles.planets}>
+          <div
+            onClick={() => setClickedPlanetId(planet.id)}
+            className={`${styles.planet} ${
+              clickedPlanetId === planet.id && styles["planet-clicked"]
+            }`}
+          >
+            <div className={styles["planet-image-container"]}>
               <img
                 src={planet.pictureUrl}
                 alt={`image of planet: ${planet.name}`}
+                className={styles["planet-image"]}
               />
             </div>
-            <div>
+            <div className={styles["planet-information"]}>
               <div>{planet.name}</div>
               <div>{planet.currentPopulation}</div>
             </div>
           </div>
-          <div>
+          <div className={styles.spacecrafts}>
             {planet.spacecrafts.map((spacecraft, index) => (
               <div
                 key={index}
                 onClick={() => handleSpacecraftClick(spacecraft.id, planet.id)}
+                className={`${styles.spacecraft} ${
+                  clickedSpacecraftId === spacecraft.id &&
+                  styles["spacecraft-clicked"]
+                }`}
               >
-                <div>
-                  {spacecraft.pictureurl ? (
+                <div className={styles["spacecraft-image-container"]}>
+                  {spacecraft.pictureUrl ? (
                     <img
                       src={spacecraft.pictureUrl}
                       alt={`image of spacecraft: ${spacecraft.name}`}
+                      className={styles["spacecraft-image"]}
                     />
                   ) : (
-                    <span>🚀</span>
+                    <span className={styles["spacecraft-image-default"]}>
+                      🚀
+                    </span>
                   )}
                 </div>
-                <div>
+                <div className={styles["spacecraft-information"]}>
                   <div>{spacecraft.name}</div>
                   <div>{spacecraft.capacity}</div>
                 </div>

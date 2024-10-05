@@ -1,0 +1,51 @@
+.spacecraft-not-exist {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 5rem;
+}
+
+.spacecraft {
+    margin-top: 5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.spacecraft-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 10rem;
+    cursor: pointer;
+    margin-bottom: 3rem;
+    border: 2px dotted white;
+}
+
+.spacecraft-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.spacecraft-image-default {
+    font-size: 5rem;
+}
+
+.spacecraft-information-container {
+    display: flex;
+    width: 100%;
+}
+
+.spacecraft-information {
+    width: 50%;
+}
+
+.spacecraft-information-title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.spacecraft-information-text {
+    text-align: justify;
+}

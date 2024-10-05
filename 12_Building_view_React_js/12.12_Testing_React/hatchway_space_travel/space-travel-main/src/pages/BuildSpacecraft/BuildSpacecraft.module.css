@@ -1,0 +1,43 @@
+.form-input-container {
+    border: 2px solid white;
+    margin: 2rem 0;
+    padding: 2rem;
+}
+
+.form-input:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.form-post-validation-container {
+    display: flex;
+}
+
+.form-error-container {
+    flex-grow: 1;
+}
+
+.form-error-text {
+    color: red;
+    margin-bottom: 2rem;
+}
+
+input,
+textarea {
+    color: white;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: transparent;
+    border: 2px solid white;
+    outline: none;
+}
+
+input:hover,
+textarea:hover {
+    border-color: lightgreen;
+}
+
+textarea {
+    min-height: 10rem;
+    resize: none;
+    overflow-y: scroll;
+}
