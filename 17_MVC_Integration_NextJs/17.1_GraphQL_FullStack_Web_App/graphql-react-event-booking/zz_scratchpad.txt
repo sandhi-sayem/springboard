@@ -1,0 +1,51 @@
+mutation{
+  createEvent(eventInput: {title: "A Test", description: "This is a test", price: 9.99, date: "2024-10-11T01:59:47.254Z"}) 
+  {title}
+}
+
+mutation{
+  createEvent(eventInput: {title: "Another event!", description: "This is just another test", price: 999.99, date: "2024-11-12T02:00:50.123Z"}) {
+    title
+    description
+  }
+}
+
+query{
+  events{
+    title
+    _id
+  }
+}
+
+query{
+  events{
+    title
+    creator{
+      email
+    }
+  }
+}
+
+
+mutation{
+  bookEvent(eventId: "670ae9deeb6c7f5c60341ed7") {
+    _id
+    createdAt
+    user{
+      email
+    }
+  }
+}
+
+query{
+  bookings{
+    _id
+    createdAt
+    event{
+      title
+      creator{
+        email
+      }
+    }
+  }
+}
