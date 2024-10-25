@@ -49,3 +49,24 @@ query{
     }
   }
 }
+
+query{
+  events{
+    _id
+    title
+    date
+    creator{
+      email
+      createdEvents{
+        title
+      }
+    }
+  }
+}
+
+{
+    "query": "query { login(email:\"test@test.com\", password: \"tester\") { token } }"
+}
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzFhZGQ1MmI2MzY0MGIzMDE1NDE5MGQiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3Mjk4MTUxNDcsImV4cCI6MTcyOTgxODc0N30.ROWOlH5ELLAUhI0Bb-JIdv4zDv4zgwpmbfjoYyXcSQM
+
