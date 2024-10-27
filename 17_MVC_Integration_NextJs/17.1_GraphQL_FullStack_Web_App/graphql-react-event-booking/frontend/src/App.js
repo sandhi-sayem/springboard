@@ -19,7 +19,9 @@ class App extends Component {
     this.setState({ token: token, userId: userId });
   };
 
-  logout = () => {};
+  logout = () => {
+    this.setState({ token: null, userId: null });
+  };
 
   render() {
     return (
@@ -27,8 +29,8 @@ class App extends Component {
         <React.Fragment>
           <AuthContext.Provider
             value={{
-              token: this.token,
-              userId: this.userId,
+              token: this.state.token,
+              userId: this.state.userId,
               login: this.login,
               logout: this.logout,
             }}
@@ -36,10 +38,25 @@ class App extends Component {
             <MainNavigation />
             <main className="main-content">
               <Routes>
-                <Route path="/" element={<Navigate to="/auth" replace />} />
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/events" element={<EventsPage />} />
-                <Route path="/bookings" element={<BookingsPage />} />
+                {this.state.token && (
+                  <Route path="/" element={<Navigate to="/events" replace />} />
+                )}
+                {this.state.token && (
+                  <Route
+                    path="/auth"
+                    element={<Navigate to="/events" replace />}
+                  />
+                )}
+                {!this.state.token && (
+                  <Route path="/auth" element={<AuthPage />} />
+                )}
+                {<Route path="/events" element={<EventsPage />} />}
+                {this.state.token && (
+                  <Route path="/bookings" element={<BookingsPage />} />
+                )}
+                {!this.state.token && (
+                  <Route path="*" element={<Navigate to="/auth" replace />} />
+                )}
               </Routes>
             </main>
           </AuthContext.Provider>
