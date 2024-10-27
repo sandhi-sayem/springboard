@@ -33,26 +33,34 @@ class AuthPage extends Component {
 
     let requestBody = {
       query: `
-        query {
-          login(email: "${email}", password: "${password}") {
+        query Login($email: String!, $password: String!) {
+          login(email: $email, password: $password) {
             userId
             token
             tokenExpiration
           }
         }
       `,
+      variables: {
+        email: email,
+        password: password,
+      },
     };
 
     if (!this.state.isLogin) {
       requestBody = {
         query: `
-          mutation {
-            createUser(userInput: {email: "${email}", password: "${password}"}){
+          mutation CreateUser($email: String!, $password: String!) {
+            createUser(userInput: {email: $email, password: $password}) {
               _id
               email
             }
           }
         `,
+        variables: {
+          email: email,
+          password: password,
+        },
       };
     }
 
@@ -70,15 +78,12 @@ class AuthPage extends Component {
         return res.json();
       })
       .then((resData) => {
-        // console.log("before", this.context.token);
         if (resData.data.login.token) {
           this.context.login(
             resData.data.login.token,
             resData.data.login.userId,
             resData.data.login.tokenExpiration
           );
-          // console.log(resData);
-          // console.log(this.context.token);
         }
       })
       .catch((err) => {
@@ -90,7 +95,7 @@ class AuthPage extends Component {
     return (
       <form className="auth-form" onSubmit={this.submitHandler}>
         <div className="form-control">
-          <label htmlFor="email">E-mail</label>
+          <label htmlFor="email">E-Mail</label>
           <input type="email" id="email" ref={this.emailEl} />
         </div>
         <div className="form-control">
