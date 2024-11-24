@@ -20,11 +20,12 @@ import Group from "../pages/Group/Group";
 const Router = () => {
   return createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<RootLayout />}>
-        <Route index element={<Welcome />} />
-        <Route path="home" element={<Home />} />
+      <Route path="/" element={<Login />}>
         <Route path="Signup" element={<Signup />} />
-        <Route path="Login" element={<Login />} />
+        <Route path="/home" element={<RootLayout />}></Route>
+        {/* <Route index element={<Welcome />} /> */}
+        {/* <Route path="home" element={<Home />} /> */}
+        {/* <Route path="Login" element={<Login />} /> */}
         <Route path="profile" element={<Profile />} />
         <Route path="friends" element={<FriendsLayout />}>
           <Route index element={<Friends />} />
