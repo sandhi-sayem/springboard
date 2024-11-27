@@ -15,24 +15,20 @@ const userSchema = new Schema(
       type: Date,
       required: [true, "Please enter a valid date of birth"],
     },
-    credentials: {
-      type: mongoose.Schema.ObjectId,
-      ref: "Credential",
-      required: [true, "Please provide credential for the user"],
+    // credentials: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Credential",
+    //   required: [true, "Please provide credential for the user"],
+    // },
+    email: {
+      type: String,
+      required: [true, "Please add an email"],
+      unique: true,
     },
-    // email: {
-    //   type: String,
-    //   required: true,
-    //   unique: true,
-    // },
-    // username: {
-    //   type: String,
-    //   required: true,
-    // },
-    // password: {
-    //   type: String,
-    //   required: true,
-    // },
+    password: {
+      type: String,
+      required: [true, "Please add a password"],
+    },
   },
   { timestamps: true }
 );
