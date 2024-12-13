@@ -74,9 +74,9 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("User", postSchema);
+const Post = mongoose.model("Post", postSchema);
 
-const validateUserSchema = (body) => {
+const validatePostCreateSchema = (body) => {
   const schema = Joi.object({
     user: Joi.object({
       fullName: Joi.string(),
@@ -91,4 +91,19 @@ const validateUserSchema = (body) => {
   return schema.validate(body);
 };
 
-module.exports = { User, validateUserSchema };
+const validatePostUpdateSchema = (body) => {
+  const schema = Joi.object({
+    user: Joi.object({
+      fullName: Joi.string(),
+      profileImage: Joi.string(),
+    }),
+    title: Joi.string().min(2).max(100).required(),
+    description: Joi.date().required(),
+    image: Joi.string().min(7).max(100).required(),
+    video: Joi.string().min(6).max(100).required(),
+  });
+
+  return schema.validate(body);
+};
+
+module.exports = { Post, validatePostCreateSchema, validatePostUpdateSchema };

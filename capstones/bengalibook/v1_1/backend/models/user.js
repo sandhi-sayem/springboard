@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-const validateUserSchema = (body) => {
+const validateUserRegisterSchema = (body) => {
   const schema = Joi.object({
     firstName: Joi.string().min(2).max(100).required(),
     lastName: Joi.string().min(2).max(100).required(),
@@ -53,4 +53,14 @@ const validateUserSchema = (body) => {
   return schema.validate(body);
 };
 
-module.exports = { User, validateUserSchema };
+const validateUserUpdateSchema = (body) => {
+  const schema = Joi.object({
+    firstName: Joi.string().min(2).max(100),
+    lastName: Joi.string().min(2).max(100),
+    password: Joi.string().min(6).max(100),
+  });
+
+  return schema.validate(body);
+};
+
+module.exports = { User, validateUserRegisterSchema, validateUserUpdateSchema };
