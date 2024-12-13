@@ -2,27 +2,26 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const userSchema = new mongoose.Schema({
-  user: {
-    type: new mongoose.Schema({
-      fullName: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 255,
-      },
-      profileImage: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 255,
-      },
-    }),
+  fullName: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 255,
+  },
+  profileImage: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 255,
   },
 });
 
 const postSchema = new mongoose.Schema(
   {
-    user: userSchema,
+    user: {
+      type: userSchema,
+      required: true,
+    },
     // user1: {
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: "User",
@@ -42,9 +41,13 @@ const postSchema = new mongoose.Schema(
     },
     image: {
       type: String,
+      minlength: 5,
+      maxlength: 255,
     },
     video: {
       type: String,
+      minlength: 5,
+      maxlength: 255,
     },
     like: {
       type: [userSchema],
@@ -79,13 +82,13 @@ const Post = mongoose.model("Post", postSchema);
 const validatePostCreateSchema = (body) => {
   const schema = Joi.object({
     user: Joi.object({
-      fullName: Joi.string(),
-      profileImage: Joi.string(),
+      fullName: Joi.string().min(2).max(255).required(),
+      profileImage: Joi.string().min(2).max(255),
     }),
-    title: Joi.string().min(2).max(100).required(),
-    description: Joi.date().required(),
-    image: Joi.string().min(7).max(100).required(),
-    video: Joi.string().min(6).max(100).required(),
+    title: Joi.string().min(1).max(50).required(),
+    description: Joi.string().min(1).max(255).required(),
+    image: Joi.string().min(7).max(100),
+    video: Joi.string().min(6).max(100),
   });
 
   return schema.validate(body);
@@ -93,14 +96,13 @@ const validatePostCreateSchema = (body) => {
 
 const validatePostUpdateSchema = (body) => {
   const schema = Joi.object({
-    user: Joi.object({
-      fullName: Joi.string(),
-      profileImage: Joi.string(),
-    }),
-    title: Joi.string().min(2).max(100).required(),
-    description: Joi.date().required(),
-    image: Joi.string().min(7).max(100).required(),
-    video: Joi.string().min(6).max(100).required(),
+    userId: Joi.string()
+      .required()
+      .regex(/^[0-9a-fA-F]{24}$/, "objectId"),
+    title: Joi.string().min(1).max(50),
+    description: Joi.string().min(1),
+    image: Joi.string().min(7).max(100),
+    video: Joi.string().min(6).max(100),
   });
 
   return schema.validate(body);

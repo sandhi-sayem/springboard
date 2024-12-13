@@ -6,9 +6,10 @@ const {
   validatePostCreateSchema,
   validatePostUpdateSchema,
 } = require("../models/post");
+const { User } = require("../models/user");
 
 router.get("/", async (req, res) => {
-  const post = await Post.find().sort({ updatedAt: -1 });
+  const post = await Post.find().sort({ updatedAt: 1 });
   return res.status(200).send(post);
 });
 
@@ -30,23 +31,30 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (!user)
+  const post = await Post.findById(req.params.id);
+  if (!post)
     return res.status(404).send("The user with the given ID was not found.");
 
   return res
     .status(200)
-    .send(_.pick(user, ["_id", "firstName", "lastName", "dob", "email"]));
+    .send(
+      _.pick(post, ["_id", "user", "title", "description", "image", "video"])
+    );
 });
 
 router.put("/:id", async (req, res) => {
-  const { error } = validateUserUpdateSchema(req.body);
+  const { error } = validatePostUpdateSchema(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
-  const user = await User.findByIdAndUpdate(
+  const user = await User.findById(req.body.userId);
+
+  const post = await Post.findByIdAndUpdate(
     req.params.id,
     {
-      firstName: req.body.firstName,
+      user: {
+        fullName: user.firstName + user.lastName,
+        profileImage: user.profileImage,
+      },
       lastName: req.body.lastName,
       password: req.body.password,
     },
@@ -58,7 +66,9 @@ router.put("/:id", async (req, res) => {
 
   return res
     .status(200)
-    .send(_.pick(user, ["_id", "firstName", "lastName", "dob", "email"]));
+    .send(
+      _.pick(post, ["_id", "user", "title", "description", "image", "video"])
+    );
 });
 
 router.delete("/:id", async (req, res) => {
@@ -69,7 +79,9 @@ router.delete("/:id", async (req, res) => {
 
   return res
     .status(200)
-    .send(_.pick(user, ["_id", "firstName", "lastName", "dob", "email"]));
+    .send(
+      _.pick(post, ["_id", "user", "title", "description", "image", "video"])
+    );
 });
 
 module.exports = router;
